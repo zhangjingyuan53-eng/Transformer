@@ -64,11 +64,11 @@ class TransformerRegressor(nn.Module):
         )
 
     def forward(self, x):
-        x = self.input_proj(x)           # (B, 1, input_dim) -> (B, 1, emb_dim)
-        x = x.permute(1, 0, 2)           # (seq_len=1, batch, emb_dim)
+        x = self.input_proj(x)           
+        x = x.permute(1, 0, 2)           
         x = self.transformer_encoder(x)
-        x = x.mean(dim=0)                # (batch, emb_dim)
-        out = torch.sigmoid(self.output_layer(x))  # (batch, output_dim)
+        x = x.mean(dim=0)                
+        out = torch.sigmoid(self.output_layer(x))  
         return out
 
 input_dim = x_train_tensor.shape[2]
@@ -141,6 +141,8 @@ predictions_denorm = scaler_y.inverse_transform(predictions.numpy())
 for i in range(output_dim):
     rmse = np.sqrt(mean_squared_error(y_test_denorm[:, i], predictions_denorm[:, i]))
     print(f"variable{i+1}: {rmse:.4f}")
+
+
 
 
 
